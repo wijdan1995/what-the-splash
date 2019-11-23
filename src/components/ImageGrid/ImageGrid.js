@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux'
 import './styles.css';
 
-const key = '5f96323678d05ff0c4eb264ef184556868e303b32a2db88ecbf15746e6f25e02';
+import {loadImages} from '../../actions'
+
+const key = '7be6b9efb134a92e7d923f6c9f43d783bfd52e40c4994dc552561386e9733c56';
 
 class ImageGrid extends Component {
     state = {
@@ -37,10 +39,20 @@ class ImageGrid extends Component {
                             />
                         </div>
                     ))}
+                    <a onClick={this.props.loadImages}>Load Images</a>
                 </section>
             </div>
         );
     }
 }
+const mapStateToProps = ({isLoading, images, error}) => ({
+    isLoading,
+    images,
+    error,
+});
 
-export default ImageGrid;
+const mapDispatchToProps = dispatch => ({
+    loadImages: () => dispatch(loadImages()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps,)(ImageGrid);
